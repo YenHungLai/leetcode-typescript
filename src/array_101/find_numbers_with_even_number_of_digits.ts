@@ -10,3 +10,5 @@ function findNumbers(nums: number[]): number {
 }
 
 console.log(findNumbers(nums));
+
+export {};
