@@ -1,37 +1,30 @@
 const arr = [17, 18, 5, 4, 6, 1];
 
-// function replaceElements(arr: number[]): number[] {
-// 	for (let i = 0; i < arr.length; i++) {
-// 		let largest = arr[i + 1];
-// 		for (let j = i + 2; j < arr.length; j++) {
-// 			if (largest < arr[j]) largest = arr[j];
-// 		}
-// 		arr[i] = largest;
-// 	}
-
-// 	arr[arr.length - 1] = -1;
-// 	return arr;
-// }
-
-// Start from end of array, O(n)
+/**
+ * Start from end of the array, keep track of the largest value
+ *
+ * T: O(n)
+ * S: O(1)
+ */
 function replaceElements(arr: number[]): number[] {
-	let largest = null;
-	for (let idx = arr.length - 1; idx >= 0; idx--) {
-		if (largest) {
-			const temp = arr[idx];
-			arr[idx] = largest;
-			if (temp > largest) {
-				largest = temp;
-			}
-		} else {
-			largest = arr[idx];
-		}
-	}
+  let greatest = 0;
 
-	arr[arr.length - 1] = -1;
-	return arr;
+  for (let idx = arr.length - 1; idx >= 0; idx--) {
+    if (idx === arr.length - 1) {
+      greatest = arr[idx];
+      arr[idx] = -1;
+      continue;
+    }
+
+    const temp = arr[idx];
+    arr[idx] = greatest;
+
+    if (temp > greatest) greatest = temp;
+  }
+
+  return arr;
 }
 
-replaceElements(arr);
+console.log(replaceElements(arr));
 
 export {};

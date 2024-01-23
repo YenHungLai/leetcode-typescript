@@ -1,50 +1,62 @@
 const A = [3, 1, 2, 4];
 
-// function sortArrayByParity(A: number[]): number[] {
-// 	let insertPos = 0;
-// 	const oddNums = [];
-// 	for (const num of A) {
-// 		if (num % 2 === 0) A[insertPos++] = num;
-// 		else oddNums.push(num);
-// 	}
-// 	while (insertPos <= A.length - 1) A[insertPos++] = oddNums.pop() as number;
+function _sortArrayByParity(A: number[]): number[] {
+  let oddPtr = 0;
 
-// 	console.log(A);
-// 	return A;
-// }
+  for (let idx = 0; idx < A.length; idx++) {
+    if (A[idx] % 2 === 0) {
+      const temp = A[oddPtr];
+      A[oddPtr++] = A[idx];
+      A[idx] = temp;
+    }
+  }
 
-// // Quick sort
-// function sortArrayByParity(A: number[]): number[] {
-// 	let i = 0,
-// 		j = A.length - 1;
-
-// 	while (i < j) {
-// 		// i is odd, j is even
-// 		if (A[i] % 2 > A[j] % 2) {
-// 			const temp = A[i];
-// 			A[i] = A[j];
-// 			A[j] = temp;
-// 		}
-// 		if (A[i] % 2 === 0) i++;
-// 		if (A[j] % 2 === 1) j--;
-// 	}
-
-// 	return A;
-// }
-
-function sortArrayByParity(A: number[]): number[] {
-	let oddPtr = 0;
-	for (let idx = 0; idx < A.length; idx++) {
-		if (A[idx] % 2 === 0) {
-			const temp = A[oddPtr];
-			A[oddPtr++] = A[idx];
-			A[idx] = temp;
-		}
-	}
-
-	return A;
+  return A;
 }
 
-sortArrayByParity(A);
+/**
+ * Not in-place but interesting solution
+ * Write even first then odd, use a pointer to mark location
+ * T: O(n)
+ * S: O(n)
+ */
+function __sortArrayByParity(A: number[]): number[] {
+  const ans: number[] = new Array(A.length);
+  let ptr: number = 0;
+
+  for (let i = 0; i < A.length; ++i) if (A[i] % 2 === 0) ans[ptr++] = A[i];
+  for (let i = 0; i < A.length; ++i) if (A[i] % 2 === 1) ans[ptr++] = A[i];
+
+  return ans;
+}
+
+/**
+ * My own solution, two pointer technique
+ * This is quicksort??
+ * T: O(n)
+ * S: O(1)
+ */
+function sortArrayByParity(A: number[]): number[] {
+  let left = 0;
+  let right = A.length - 1;
+
+  while (left < right) {
+    // Left is odd and right is even
+    if (A[left] % 2 > A[right] % 2) {
+      const temp = A[left];
+      A[left] = A[right];
+      A[right] = temp;
+      left++;
+      right++;
+    }
+
+    if (A[left] % 2 === 0) left++;
+    if (A[right] % 2 !== 0) right--;
+  }
+
+  return A;
+}
+
+console.log(sortArrayByParity(A));
 
 export {};

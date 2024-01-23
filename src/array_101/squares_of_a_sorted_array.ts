@@ -1,23 +1,18 @@
 const A: number[] = [-4, -1, 0, 3, 10];
 
-// function sortedSquares(A: number[]): number[] {
-// 	const result: number[] = [];
-// 	for (const num of A) {
-// 		result.push(num ** 2);
-// 	}
-
-// 	return result.sort((a, b) => a - b);
-// }
-
-// Two pointer technique
+/**
+ * Two pointer technique
+ * T: O(N)
+ * S: O(1)
+ */
 function sortedSquares(A: number[]): number[] {
   const result = [];
-  let left = 0,
-    right = A.length - 1;
+  let left = 0;
+  let right = A.length - 1;
 
   while (left <= right) {
-    const leftAbs = Math.abs(A[left]),
-      rightAbs = Math.abs(A[right]);
+    const leftAbs = Math.abs(A[left]);
+    const rightAbs = Math.abs(A[right]);
 
     if (leftAbs > rightAbs) {
       result.unshift(leftAbs ** 2);
