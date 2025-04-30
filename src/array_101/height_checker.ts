@@ -22,7 +22,10 @@ function heightChecker(heights: number[]): number {
   let count = 0;
 
   // bubbleSort(_heights);
-  quickSort(_heights, 0, _heights.length - 1);
+  // quickSort(_heights, 0, _heights.length - 1);
+  // mergeSort(_heights);
+  // insertionSort(_heights);
+  selectionSort(_heights);
 
   for (let i = 0; i < _heights.length; i++) {
     if (_heights[i] !== heights[i]) count++;
@@ -86,4 +89,96 @@ function quickSort(array: number[], left: number, right: number) {
   }
 }
 
+/**
+ * Merge sort
+ * T: O(n*log(n))
+ * S: O(n)
+ *
+ * Merge sort always divides the array into two halves and takes linear time to merge two halves
+ */
+function mergeSort(array: number[]) {
+  if (array.length <= 1) return;
+
+  const mid = Math.floor(array.length / 2);
+  const leftArray = array.slice(0, mid);
+  const rightArray = array.slice(mid);
+
+  mergeSort(leftArray);
+  mergeSort(rightArray);
+
+  // Start merging
+  let i = 0;
+  let j = 0;
+  let k = 0;
+
+  while (i < leftArray.length && j < rightArray.length) {
+    if (leftArray[i] < rightArray[j]) {
+      array[k] = leftArray[i]; // When it bubbles up, this will eventually update the original array
+      i++;
+    } else {
+      array[k] = rightArray[j];
+      j++;
+    }
+    k++;
+  }
+
+  while (i < leftArray.length) {
+    array[k] = leftArray[i];
+    i++;
+    k++;
+  }
+  while (j < rightArray.length) {
+    array[k] = rightArray[j];
+    j++;
+    k++;
+  }
+}
+
+/**
+ * Insertion sort
+ * T: O(n^2) average case
+ * S: O(1)
+ *
+ * Places an unsorted element at its suitable place in each iteration
+ * Worst case occurs when given array is in ascending order and you want descending
+ * Best case is when array is already sorted then the for loop runs for n times
+ */
+function insertionSort(array: number[]) {
+  // The first element is assumed to be sorted
+  for (let i = 1; i < array.length; i++) {
+    const current = array[i];
+    let ptr = i - 1;
+
+    // "Shifts" elements to the right
+    while (ptr >= 0 && current < array[ptr]) {
+      array[ptr + 1] = array[ptr];
+      ptr--;
+    }
+
+    // ptr is at minimum -1 so you can move current to index 0
+    array[ptr + 1] = current;
+  }
+}
+
+/**
+ * Selection sort
+ * T: O(n^2)
+ * S: O(1)
+ */
+function selectionSort(array: number[]) {
+  for (let i = 0; i < array.length; i++) {
+    let min = i;
+
+    for (let j = i + 1; j < array.length; j++) {
+      if (array[j] < array[min]) min = j;
+    }
+
+    const temp = array[i];
+    array[i] = array[min];
+    array[min] = temp;
+  }
+}
+
 console.log(heightChecker(heights));
+
+export { quickSort, mergeSort };

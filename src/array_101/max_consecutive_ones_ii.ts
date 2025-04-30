@@ -41,7 +41,7 @@ function findMaxConsecutiveOnes(nums: number[]): number {
   while (right < nums.length) {
     if (nums[right] === 0) numZeroes++;
 
-    // Readjust window
+    // Re-adjust window
     while (numZeroes === 2) {
       if (nums[left] === 0) numZeroes--;
       left++;
@@ -56,3 +56,5 @@ function findMaxConsecutiveOnes(nums: number[]): number {
 }
 
 console.log(findMaxConsecutiveOnes(nums));
+
+export {};

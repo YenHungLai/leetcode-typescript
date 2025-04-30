@@ -1,21 +1,23 @@
-// Brute force
+/**
+ * Stack solution
+ * Whenever you see an operator, pop twice, evaluate, and push result back onto stack
+ */
 function evalRPN(tokens: string[]): number {
-	const stack = [];
-	const operators = ['+', '-', '*', '/'];
+  const stack: string[] = [];
+  const operators = ["+", "-", "*", "/"];
 
-	for (const token of tokens) {
-		if (operators.includes(token)) {
-			const num1 = stack.pop();
-			const num2 = stack.pop();
-			const val = Math.trunc(eval(`${num2} ${token} ${num1}`));
-			stack.push(val);
-		} else stack.push(token);
-	}
+  for (const token of tokens) {
+    if (operators.includes(token)) {
+      const n1 = stack.pop();
+      const n2 = stack.pop();
+      const res = Math.trunc(eval(`${n2} ${token} ${n1}`)).toString();
+      stack.push(res);
+    } else stack.push(token);
+  }
 
-	return stack.pop() as number;
+  return +stack.pop()!;
 }
 
-const ans = evalRPN(['10', '6', '9', '3', '+', '-11', '*', '/', '*', '17', '+', '5', '+']);
-console.log(ans);
+console.log(evalRPN(["4", "13", "5", "/", "+"]));
 
 export {};

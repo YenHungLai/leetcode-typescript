@@ -27,4 +27,4 @@ function replaceElements(arr: number[]): number[] {
 
 console.log(replaceElements(arr));
 
-export {};
+export { };
